@@ -136,10 +136,10 @@ class EncoderLayer(nn.Module):
             d_model, kernel_size=kwargs["kernel_size_gc"], dropout=p_dropout
         )
         # self.mbconv = FusedMBConv(d_model, p_dropout)
-        self.grus = nn.ModuleList()
+        self.rnns = nn.ModuleList()
         for i in range(0, kwargs["n_heads_rnn"]):
             if i % 2 == 0:
-                self.grus.append(
+                self.rnns.append(
                     compile(
                         nn.LSTM(
                             d_model,
@@ -152,7 +152,7 @@ class EncoderLayer(nn.Module):
                     )
                 )
             else:
-                self.grus.append(
+                self.rnns.append(
                     compile(
                         nn.GRU(
                             d_model,
@@ -192,8 +192,8 @@ class EncoderLayer(nn.Module):
         x = self.norm[2](x + x_ffn) + self.norm[3](res)
         x = self.atts(x, b)
         xs = []
-        for i in range(0, len(self.grus)):
-            x1, _ = self.grus[i](x)
+        for i in range(0, len(self.rnns)):
+            x1, _ = self.rnns[i](x)
             xs.append(x1)
         x = torch.cat(xs, dim=-1)
         return x, res

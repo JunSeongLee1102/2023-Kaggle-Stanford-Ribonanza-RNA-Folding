@@ -11,6 +11,7 @@ from lightning.pytorch.callbacks import Callback
 from lightning.pytorch.loggers import TensorBoardLogger
 from sklearn.model_selection import StratifiedGroupKFold
 from apex.normalization import FusedLayerNorm, FusedRMSNorm
+from prettytable import PrettyTable
 
 
 def sort_weight_decay_params(model: nn.Module) -> tuple[list, list]:
@@ -207,3 +208,17 @@ class TBLogger(TensorBoardLogger):
         log_dir = os.path.expandvars(log_dir)
         log_dir = os.path.expanduser(log_dir)
         return log_dir
+
+
+def count_parameters(model):
+    table = PrettyTable(["Modules", "Parameters"])
+    total_params = 0
+    for name, parameter in model.named_parameters():
+        if not parameter.requires_grad:
+            continue
+        params = parameter.numel()
+        table.add_row([name, params])
+        total_params += params
+    print(table)
+    print(f"Total Trainable Params: {total_params}")
+    return total_params
