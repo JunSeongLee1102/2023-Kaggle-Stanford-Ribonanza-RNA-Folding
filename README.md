@@ -16,8 +16,8 @@ Our team's (R.L.J) solution [here](https://www.kaggle.com/competitions/stanford-
 │   ├── train_data_processed_ALL_2.parquet (train dataset)
 │   ├── test_sequences_processed_ALL.parquet (test dataset)
 │   ├── submission_for_pseudo_v2.parquet (pseudo dataset)
-|   ├── train_sparse_bpps
-|   ├── test_sparse_bpps
+│   ├── train_sparse_bpps
+│   ├── test_sparse_bpps
 ├── exp
 │   └── trainer.py
 ├── main
