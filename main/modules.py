@@ -13,7 +13,7 @@ def compile(layers):
         layers,
         dynamic=True,
         options={"shape_padding": True},
-        disable=torch.cuda.device_count() == 1,
+        disable=torch.cuda.device_count() > 1,
     )
 
 

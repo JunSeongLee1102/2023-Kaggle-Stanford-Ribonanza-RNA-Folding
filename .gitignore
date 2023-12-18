@@ -1,5 +1,7 @@
 data/
 main/__pycache__/
-exp/
+#exp/
+!exp/
+exp/**
 !exp/trainer.py
 #.gitignore
