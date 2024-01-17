@@ -138,7 +138,7 @@ class EncoderLayer(nn.Module):
         # self.mbconv = FusedMBConv(d_model, p_dropout)
         self.rnns = nn.ModuleList()
         for i in range(0, kwargs["n_heads_rnn"]):
-            if i % 2 == 0:
+            if i % 2 == 1:
                 self.rnns.append(
                     compile(
                         nn.LSTM(
